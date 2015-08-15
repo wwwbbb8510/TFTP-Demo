@@ -1,5 +1,6 @@
 package com.bgoverseas.tftp.packet;
 
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 /**
@@ -32,9 +33,9 @@ public abstract class TFTPBasePacket {
      */
     public static final int BLOCK_SIZE = 512;
     /**
-     * packet type used to store sub packet class type
+     * packet opcode used to store sub packet class type
      */
-    int type;
+    int opcode;
     /**
      * TID of the packet which is also used as the connection port
      */
@@ -45,11 +46,29 @@ public abstract class TFTPBasePacket {
     InetAddress address;
 
     /**
+     * constructor
+     * @param opcode packet type
+     * @param tid packet TID
+     * @param address host address
+     */
+    protected TFTPBasePacket(int opcode, int tid, InetAddress address){
+        this.opcode = opcode;
+        this.tid = tid;
+        this.address = address;
+    }
+
+    /**
+     * abstract method of creating a datagram packet
+     * @return
+     */
+    public abstract DatagramPacket createPacket();
+
+    /**
      * get the current packet type
      * @return
      */
-    public int getType() {
-        return type;
+    public int getOpcode() {
+        return opcode;
     }
 
     /**
