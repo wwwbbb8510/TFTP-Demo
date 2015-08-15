@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f602da4e-8d8e-4231-a84d-fa85d075526c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPRequestPacket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPBasePacket.java" afterPath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPBasePacket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPDataPacket.java" afterPath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPDataPacket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPReadRequestPacket.java" afterPath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPReadRequestPacket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPWriteRequestPacket.java" afterPath="$PROJECT_DIR$/src/com/bgoverseas/tftp/packet/TFTPWriteRequestPacket.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TFTP_Demo.iws" />
@@ -500,7 +495,13 @@
       <option name="project" value="LOCAL" />
       <updated>1439608616241</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="develop packet and exception classes">
+      <created>1439636776105</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1439636776105</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
