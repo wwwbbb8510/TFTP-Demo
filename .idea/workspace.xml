@@ -491,7 +491,13 @@
       <option name="project" value="LOCAL" />
       <updated>1439725236001</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="develop packet and exception classes">
+      <created>1439725304770</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1439725304770</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
