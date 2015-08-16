@@ -79,4 +79,68 @@ public class TFTPDataPacket extends TFTPBasePacket {
 
         return new DatagramPacket(data, this.dataLength + 4, this.address, this.tid);
     }
+
+    /**
+     * get block number
+     * @return
+     */
+    public int getBlockNumber() {
+        return blockNumber;
+    }
+
+    /**
+     * set block number
+     * @param blockNumber
+     */
+    public void setBlockNumber(int blockNumber) {
+        this.blockNumber = blockNumber;
+    }
+
+    /**
+     * get data length
+     * @return
+     */
+    public int getDataLength() {
+        return dataLength;
+    }
+
+    /**
+     * set data length
+     * @param dataLength
+     */
+    public void setDataLength(int dataLength) {
+        this.dataLength = dataLength;
+    }
+
+    /**
+     * get offset
+     * @return
+     */
+    public int getOffset() {
+        return offset;
+    }
+
+    /**
+     * set offset
+     * @param offset
+     */
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    /**
+     * get data
+     * @return
+     */
+    public byte[] getData() {
+        return data;
+    }
+
+    /**
+     * set data
+     * @param data
+     */
+    public void setData(byte[] data) {
+        this.data = data;
+    }
 }
