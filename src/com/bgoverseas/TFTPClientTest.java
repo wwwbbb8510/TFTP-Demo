@@ -1,6 +1,7 @@
-package com.bgoverseas.tftp;
+package com.bgoverseas;
 
-import org.apache.commons.net.tftp.TFTP;
+import com.bgoverseas.tftp.TFTPBase;
+import com.bgoverseas.tftp.TFTPClient;
 
 import java.io.File;
 import java.io.FileInputStream;
