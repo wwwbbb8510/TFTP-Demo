@@ -95,7 +95,7 @@ public abstract class TFTPRequestPacket extends TFTPBasePacket {
 
         data = new byte[fileLength + modeLength + 4];//2 bytes of opcode + filename length + 1 byte of 0 + mode length + 1 byte of 0
         data[0] = 0;//first byte of opcode
-        data[1] = (byte)this.tid;//second byte of opcode
+        data[1] = (byte)this.getOpcode();//second byte of opcode
         System.arraycopy(this.filename.getBytes(), 0, data, 2, fileLength);//bytes of filename
         data[fileLength + 2] = 0;//1 byte of 0 as the delimiter of filename
         System.arraycopy(this.mode.getBytes(), 0, data, fileLength + 3,modeLength);//bytes of mode

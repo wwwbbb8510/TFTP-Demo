@@ -29,7 +29,7 @@ public class TFTPBase {
     /**
      * default server port
      */
-    public static final int DEFAULT_SERVER_PORT = 69;
+    public static final int DEFAULT_SERVER_PORT = 6900;
     /**
      * the accepted packet size used for receiving the packet
      */

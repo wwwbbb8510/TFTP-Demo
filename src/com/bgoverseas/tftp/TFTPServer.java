@@ -17,7 +17,7 @@ import java.util.Iterator;
  */
 public class TFTPServer implements Runnable{
 
-    private static final int DEFAULT_TFTP_PORT = 69;
+    private static final int DEFAULT_TFTP_PORT = 6900;
     public static enum ServerMode { R, W; }
     private HashSet<TFTPServerHandler> handlers = new HashSet<TFTPServerHandler>();
     private ServerMode mode;
@@ -149,6 +149,14 @@ public class TFTPServer implements Runnable{
         }
     }
 
+    public int getSocketTimeout() {
+        return socketTimeout;
+    }
+
+    public void setSocketTimeout(int socketTimeout) {
+        this.socketTimeout = socketTimeout;
+    }
+
     private class TFTPServerHandler implements Runnable{
         private TFTPBasePacket tftpPacket;
         private boolean shutdownHandler = false;
@@ -227,12 +235,6 @@ public class TFTPServer implements Runnable{
             InputStream is = null;
             try
             {
-                if (TFTPServer.this.mode == ServerMode.R)
-                {
-                    this.tftp.send(new TFTPErrorPacket(rrqPacket.getTid(), rrqPacket.getAddress(), TFTPErrorPacket.ERROR_ILLEGAL_OPERATION,"Read not allowed by server."));
-                    return;
-                }
-
                 try
                 {
                     is = new BufferedInputStream(new FileInputStream(buildSafeFile(

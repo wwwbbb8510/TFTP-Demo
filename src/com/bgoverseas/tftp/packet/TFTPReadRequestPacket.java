@@ -28,6 +28,6 @@ public class TFTPReadRequestPacket extends TFTPRequestPacket {
      */
     public TFTPReadRequestPacket(DatagramPacket datagram)
             throws TFTPPacketException{
-        super(TFTPBasePacket.OPCODE_WRITE_REQUEST, datagram);
+        super(TFTPBasePacket.OPCODE_READ_REQUEST, datagram);
     }
 }
