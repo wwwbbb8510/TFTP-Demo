@@ -1,5 +1,6 @@
 package com.bgoverseas.tftp.packet;
 
+import com.bgoverseas.tftp.TFTPBase;
 import com.bgoverseas.tftp.exception.TFTPPacketException;
 
 import java.net.DatagramPacket;
@@ -140,7 +141,14 @@ public class TFTPDataPacket extends TFTPBasePacket {
      * set data
      * @param data
      */
-    public void setData(byte[] data) {
+    public void setData(byte[] data, int offset, int length) {
         this.data = data;
+        this.offset = offset;
+        this.dataLength = length;
+
+        if (length > TFTPBasePacket.BLOCK_SIZE)
+            this.dataLength = TFTPBasePacket.BLOCK_SIZE;
+        else
+            this.dataLength = length;
     }
 }

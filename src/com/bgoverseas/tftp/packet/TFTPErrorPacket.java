@@ -120,4 +120,20 @@ public class TFTPErrorPacket extends TFTPBasePacket {
 
         return new DatagramPacket(data, data.length, this.address, this.tid);
     }
+
+    /**
+     * get error code
+     * @return
+     */
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    /**
+     * get error message
+     * @return
+     */
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }
