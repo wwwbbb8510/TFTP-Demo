@@ -17,6 +17,7 @@ This project implements the TFTP protocol
 > Before running any of the test commands, please go in to the {BaseDir} using a terminal on linux or a command line tool on windows
 
 * Start the server
+
 > `ant run-server`
 >
 > Note: The server directory is {BaseDir}/files/remote which is defined in the build.xml
