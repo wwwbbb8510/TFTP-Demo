@@ -12,8 +12,11 @@ public class Checksum {
     public static void main(String[] args){
         while (true){
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter the file name:");
             String fileName = scanner.next();
+            if(fileName.equals("exit")){
+                System.out.println("Exiting");
+                System.exit(0);
+            }
             File file = new File(fileName);
             if(file.exists()){
                 try {

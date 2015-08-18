@@ -74,8 +74,9 @@
     </target>
 
     <target name="run-checksum" depends="compile">
-        <java classname="com.bgoverseas.Checksum">
-            <arg value="-h"/>
+        <echo message="Enter the file name and press enter, then you will get the checksum value."/>
+        <echo message="Enter the string 'exit' to quit"/>
+        <java classname="com.bgoverseas.Checksum" fork="true">
             <classpath>
                 <pathelement path="build/classes"/>
             </classpath>

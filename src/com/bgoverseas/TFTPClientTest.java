@@ -88,6 +88,7 @@ public class TFTPClientTest {
         }
         closed = false;//set the closed status of the local file to false which means it's open
         if (receiveFile) {//receive a file
+            System.out.println("Start copying server: " + hostname + " file:" + remoteFilename + " to local file:" + localFilename);
             FileOutputStream output = null;
             File file;
 
@@ -144,8 +145,9 @@ public class TFTPClientTest {
             if (!closed) {
                 System.exit(1);
             }
-
+            System.out.println("End copying server: " + hostname + " file:" + remoteFilename + " to local file:" + localFilename);
         } else {//send a file
+            System.out.println("Start sending to server: " + hostname + " file:" + remoteFilename + " from local file:" + localFilename);
             FileInputStream input = null;
 
             // Try to open local file for reading
@@ -193,7 +195,7 @@ public class TFTPClientTest {
             if (!closed) {
                 System.exit(1);
             }
-
+            System.out.println("End sending to server: " + hostname + " file:" + remoteFilename + " from local file:" + localFilename);
         }
 
     }
