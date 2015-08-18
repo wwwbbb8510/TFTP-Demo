@@ -20,7 +20,7 @@ public class TFTPServerTest {
         if (args.length != 1)
         {
             System.out
-            .println("One parameter is required which is the directory for the test server");
+                    .println("One parameter is required which is the directory for the test server");
             System.exit(1);
         }
 

@@ -1,0 +1,83 @@
+<project>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes" includeantruntime="false"/>
+    </target>
+
+    <target name="jar-server" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/TFTPServer.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.bgoverseas.TFTPServerTest"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="jar-client" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/TFTPClient.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.bgoverseas.TFTPClientTest"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run-server" depends="jar-server">
+        <java jar="build/jar/TFTPServer.jar" fork="true">
+            <arg value="files/remote"></arg>
+        </java>
+    </target>
+
+    <target name="run-client-receive-ot" depends="jar-client">
+        <java jar="build/jar/TFTPClient.jar" fork="true">
+            <arg value="-b"></arg>
+            <arg value="-r"></arg>
+            <arg value="localhost"></arg>
+            <arg value="files/local/na-r.txt"></arg>
+            <arg value="na-r.txt"></arg>
+        </java>
+    </target>
+
+    <target name="run-client-receive-na" depends="jar-client">
+        <java jar="build/jar/TFTPClient.jar" fork="true">
+            <arg value="-a"></arg>
+            <arg value="-r"></arg>
+            <arg value="localhost"></arg>
+            <arg value="files/local/ot-r.txt"></arg>
+            <arg value="ot-r.txt"></arg>
+        </java>
+    </target>
+
+    <target name="run-client-send-ot" depends="jar-client">
+        <java jar="build/jar/TFTPClient.jar" fork="true">
+            <arg value="-b"></arg>
+            <arg value="-s"></arg>
+            <arg value="localhost"></arg>
+            <arg value="files/local/na-w.txt"></arg>
+            <arg value="na-w.txt"></arg>
+        </java>
+    </target>
+
+    <target name="run-client-send-na" depends="jar-client">
+        <java jar="build/jar/TFTPClient.jar" fork="true">
+            <arg value="-a"></arg>
+            <arg value="-s"></arg>
+            <arg value="localhost"></arg>
+            <arg value="files/local/ot-w.txt"></arg>
+            <arg value="ot-w.txt"></arg>
+        </java>
+    </target>
+
+    <target name="clean-copy">
+        <delete file="files/local/na-w.txt"/>
+        <delete file="files/local/ot-w.txt"/>
+        <delete file="files/remote/na-w.txt"/>
+        <delete file="files/remote/ot-w.txt"/>
+    </target>
+
+</project>
