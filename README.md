@@ -12,11 +12,11 @@ This project implements the TFTP protocol
 ### Use ant to run the test (the easiest way to do the test) ###
 
 * Requirements
-Ant 1.9.3 or higher version(a build tool for java project) should be installed
-Before running any of the test commands, please go in to the {BaseDir} using a terminal on linux or a command line tool on windows
+> Ant 1.9.3 or higher version(a build tool for java project) should be installed
+> Before running any of the test commands, please go in to the {BaseDir} using a terminal on linux or a command line tool on windows
 * Start the server
-ant run-server
-Note: The server directory is {BaseDir}/files/remote which is defined in the build.xml
+> `ant run-server`
+> Note: The server directory is {BaseDir}/files/remote which is defined in the build.xml
 * Test sending the file from client to server using the mode of Netascii
 ant run-client-send-na
 Note: The client path is {BaseDir}/files/local/na-w.txt and the server file name is na-w.txt.
