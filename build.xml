@@ -37,8 +37,11 @@
         <java jar="build/jar/TFTPClient.jar" fork="true">
             <arg value="-b"></arg>
             <arg value="-r"></arg>
+            <!--hostname-->
             <arg value="localhost"></arg>
+            <!--local file name-->
             <arg value="files/local/na-r.txt"></arg>
+            <!--server file name-->
             <arg value="na-r.txt"></arg>
         </java>
     </target>
@@ -47,8 +50,11 @@
         <java jar="build/jar/TFTPClient.jar" fork="true">
             <arg value="-a"></arg>
             <arg value="-r"></arg>
+            <!--hostname-->
             <arg value="localhost"></arg>
+            <!--local file name-->
             <arg value="files/local/ot-r.txt"></arg>
+            <!--server file name-->
             <arg value="ot-r.txt"></arg>
         </java>
     </target>
@@ -57,8 +63,11 @@
         <java jar="build/jar/TFTPClient.jar" fork="true">
             <arg value="-b"></arg>
             <arg value="-s"></arg>
+            <!--hostname-->
             <arg value="localhost"></arg>
+            <!--local file name-->
             <arg value="files/local/na-w.txt"></arg>
+            <!--server file name-->
             <arg value="na-w.txt"></arg>
         </java>
     </target>
@@ -67,8 +76,11 @@
         <java jar="build/jar/TFTPClient.jar" fork="true">
             <arg value="-a"></arg>
             <arg value="-s"></arg>
+            <!--hostname-->
             <arg value="localhost"></arg>
+            <!--local file name-->
             <arg value="files/local/ot-w.txt"></arg>
+            <!--server file name-->
             <arg value="ot-w.txt"></arg>
         </java>
     </target>

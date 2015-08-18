@@ -65,7 +65,7 @@ This project implements the TFTP protocol
 * Want to user you own files?
 
 > 1. Please put your files used by the client under the folder of {BaseDir}/files/local and put your files used by the server under the folder of {BaseDir}/files/remote.
-> 2. Change both the server file name and client file name according to your file name.
+> 2. Change both the server file name and client file name according to your file name in build.xml
 > 3. Run the steps above to do the tests.
 
 ### Use IntelliJ(Jetbrains) to run the test ###
