@@ -4,6 +4,7 @@ This project implements the TFTP protocol
 ### Basic Requirements ###
 
 * JDK 8(The codes was developed and tested on the version, while it might work on a lower version but not guaranteed)
+* The port of `6900` must be vacant, because the TFTP test server will use it
 
 ### Terms for README ###
 
@@ -89,26 +90,50 @@ Please download and install the newest version of IntelliJ
 
 > 1. Open src/com/bgoverseas/TFTPClientText
 > 2. Open Run->Edit Configuration
-> 3. Enter "-s -a localhost files/local/na-r.txt na-r.txt" as the Program Arguments value
+> 3. Enter "-s -a localhost files/local/na-w.txt na-w.txt" as the Program Arguments value
 > 4. Run the client
 
 * Test sending the file from client to server using the mode of Octet
 
 > 1. Open src/com/bgoverseas/TFTPClientText
 > 2. Open Run->Edit Configuration
-> 3. Enter "-s -b localhost files/local/ot-r.txt ot-r.txt" as the Program Arguments value
+> 3. Enter "-s -b localhost files/local/ot-w.txt ot-w.txt" as the Program Arguments value
 > 4. Run the client
 
 * Test copying the file from server to client using the mode of Netascii
 
 > 1. Open src/com/bgoverseas/TFTPClientText
 > 2. Open Run->Edit Configuration
-> 3. Enter "-r -a localhost files/local/na-w.txt na-w.txt" as the Program Arguments value
+> 3. Enter "-r -a localhost files/local/na-r.txt na-r.txt" as the Program Arguments value
 > 4. Run the client
 
 * Test copying the file from server to client using the mode of Octet
 
 > 1. Open src/com/bgoverseas/TFTPClientText
 > 2. Open Run->Edit Configuration
-> 3. Enter "-r -b localhost files/local/ot-w.txt ot-w.txt" as the Program Arguments value
+> 3. Enter "-r -b localhost files/local/ot-r.txt ot-r.txt" as the Program Arguments value
 > 4. Run the client
+
+### Checksum tool ###
+
+* After having done file transfers, there will be four files in the files/local and in the files/remote folder respectively.
+The following steps are used for comaparing the checksum value of the files. There are also two ways to do it: ant or IntelliJ
+
+1. Ant: Simply run the command: `ant run-checksum`
+> Enter the file names below to get all of the checksum values:
+> > `files/local/na-w.txt`
+> >
+> > `files/local/na-r.txt`
+> > `files/local/ot-w.txt`
+> >
+> > `files/local/ot-r.txt`
+> >
+> > `files/remote/na-w.txt`
+> >
+> > `files/remote/na-r.txt`
+> >
+> > `files/remote/ot-w.txt`
+> >
+> > `files/remote/ot-r.txt`
+> >
+2. IntelliJ: Open and run the file src/com/bgoverseas/Checksum and enter the file names as Ant.

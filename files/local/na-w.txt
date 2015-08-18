@@ -1,5 +1,5 @@
-na-r
+na-w
 
 
-na-r
-na-r
+na-w
+na-w

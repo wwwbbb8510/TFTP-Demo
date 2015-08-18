@@ -315,8 +315,9 @@ public class TFTPClient extends TFTPBase{
             dataLength = TFTPBasePacket.BLOCK_SIZE;
             offset = 4;
             totalThisPacket = 0;
+            byte[] blockContent = new byte[TFTPBase.ACCEPTED_DEFAULT_PACKET_SIZE];
             while (dataLength > 0 &&
-                    (bytesRead = input.read(new byte[TFTPBase.ACCEPTED_DEFAULT_PACKET_SIZE], offset, dataLength)) > 0)
+                    (bytesRead = input.read(blockContent, offset, dataLength)) > 0)
             {
                 offset += bytesRead;
                 dataLength -= bytesRead;
@@ -328,7 +329,7 @@ public class TFTPClient extends TFTPBase{
                 lastAckWait = true;
             }
             data.setBlockNumber(block);
-            data.setData(new byte[TFTPBase.ACCEPTED_DEFAULT_PACKET_SIZE], 4, totalThisPacket);
+            data.setData(blockContent, 4, totalThisPacket);
             sentPacket = data;
         }
         while ( totalThisPacket > 0 || lastAckWait );

@@ -73,11 +73,20 @@
         </java>
     </target>
 
+    <target name="run-checksum" depends="compile">
+        <java classname="com.bgoverseas.Checksum">
+            <arg value="-h"/>
+            <classpath>
+                <pathelement path="build/classes"/>
+            </classpath>
+        </java>
+    </target>
+
     <target name="clean-copy">
         <delete file="files/local/na-w.txt"/>
         <delete file="files/local/ot-w.txt"/>
-        <delete file="files/remote/na-w.txt"/>
-        <delete file="files/remote/ot-w.txt"/>
+        <delete file="files/remote/na-r.txt"/>
+        <delete file="files/remote/ot-r.txt"/>
     </target>
 
 </project>
