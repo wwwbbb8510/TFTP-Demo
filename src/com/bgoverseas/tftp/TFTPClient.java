@@ -19,19 +19,38 @@ import java.net.SocketException;
  * TFTP Client
  */
 public class TFTPClient extends TFTPBase{
-
+    /**
+     * default maximum trying times for timeout
+     */
     public static final int DEFAULT_MAX_TIMEOUT_NUMBER = 3;
 
+    /**
+     * maximum trying times for timeout of this client
+     */
     private int maxTimeoutNumber;
 
+    /**
+     * constructor
+     */
     public TFTPClient(){
         this.maxTimeoutNumber = TFTPClient.DEFAULT_MAX_TIMEOUT_NUMBER;
     }
 
+    /**
+     * transfer the file from server to client
+     * @param filename server file name
+     * @param mode TFTP mode(netascii or octet)
+     * @param output output stream of the client
+     * @param address server address
+     * @param port server port
+     * @return
+     * @throws IOException
+     */
     public int receiveFile(String filename, String mode, OutputStream output,
                            InetAddress address, int port) throws IOException {
+        //variable definitions for this method
         int bytesRead = 0;
-        int timeoutTimes = 0;
+        int timeoutTimes = 0;//timeout occurred times
         int lastBlock = 0;
         int block = 1;
         int hostTid = 0;
@@ -41,17 +60,20 @@ public class TFTPClient extends TFTPBase{
         TFTPDataPacket data;
         TFTPAckPacket ack = new TFTPAckPacket(port, address, 0);
 
+        //convert the output stream netascii output stream
         if (mode == TFTPBase.NETASCII_MODE)
             output = new NetasciiOutputStream(output);
 
-        sentPacket =
-                new TFTPReadRequestPacket(port, address, filename, mode);
+        //build the RRP
+        sentPacket = new TFTPReadRequestPacket(port, address, filename, mode);
 
         _sendPacket:
         do
         {
+            //send the packet
             this.send(sentPacket);
 
+            //receive the packet
             _receivePacket:
             while (true)
             {
@@ -170,14 +192,33 @@ public class TFTPClient extends TFTPBase{
         return bytesRead;
     }
 
+    /**
+     * transfer the file from server to client using default server port
+     * @param filename
+     * @param mode
+     * @param output
+     * @param address
+     * @return
+     * @throws IOException
+     */
     public int receiveFile(String filename, String mode, OutputStream output,
                            InetAddress address) throws IOException {
         return this.receiveFile(filename, mode, output, address, TFTPBase.DEFAULT_SERVER_PORT);
     }
 
+    /**
+     * send the file to server
+     * @param filename
+     * @param mode
+     * @param input
+     * @param address
+     * @param port
+     * @throws IOException
+     */
     public void sendFile(String filename, String mode, InputStream input,
                          InetAddress address, int port) throws IOException
     {
+        //initiate the variables
         int bytesRead = 0;
         int timeoutTimes = 0;
         int lastBlock = 0;
@@ -193,20 +234,20 @@ public class TFTPClient extends TFTPBase{
         TFTPDataPacket data = new TFTPDataPacket(port,address, 0, 0 , 4, new byte[TFTPBase.ACCEPTED_DEFAULT_PACKET_SIZE]);
         TFTPAckPacket ack;
 
+        //convert the input stream to netascii output stream
         if (mode == TFTPBase.NETASCII_MODE)
             input = new NetasciiInputStream(input);
 
-        sentPacket =
-                new TFTPWriteRequestPacket(port, address, filename, mode);
+        //build the WRP
+        sentPacket = new TFTPWriteRequestPacket(port, address, filename, mode);
 
         _sendPacket:
         do
         {
-            // first time: block is 0, lastBlock is 0, send a request packet.
-            // subsequent: block is integer starting at 1, send data packet.
+            //send the packet
             this.send(sentPacket);
 
-            // this is trying to receive an ACK
+            // receive the packet
             _receivePacket:
             while (true)
             {
@@ -238,7 +279,7 @@ public class TFTPClient extends TFTPBase{
                     {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
-                } // end of while loop over tries to receive
+                }
 
                 // The first time we receive we get the port number and
                 if (justStarted)
@@ -247,13 +288,10 @@ public class TFTPClient extends TFTPBase{
                     hostTid = receivedPacket.getTid();
                     data.setTid(hostTid);
                 }
-
-                // Comply with RFC 783 indication that an error acknowledgement
                 // should be sent to originator if unexpected TID or host.
                 if (address.equals(receivedPacket.getAddress()) &&
                         receivedPacket.getTid() == hostTid)
                 {
-
                     switch (receivedPacket.getOpcode())
                     {
                         case TFTPBasePacket.OPCODE_ERROR_REQUEST:
@@ -270,7 +308,6 @@ public class TFTPClient extends TFTPBase{
                                 ++block;
                                 if (block > 65535)
                                 {
-                                    // wrap the block number
                                     block = 0;
                                 }
                                 if (lastAckWait) {
@@ -303,14 +340,7 @@ public class TFTPClient extends TFTPBase{
                     this.send(error);
                     continue _sendPacket;
                 }
-
-                // We should never get here, but this is a safety to avoid
-                // infinite loop.  If only Java had the goto statement.
-                //break;
             }
-
-            // OK, we have just gotten ACK about the last data we sent. Make another
-            // and send it
 
             dataLength = TFTPBasePacket.BLOCK_SIZE;
             offset = 4;
@@ -333,11 +363,16 @@ public class TFTPClient extends TFTPBase{
             sentPacket = data;
         }
         while ( totalThisPacket > 0 || lastAckWait );
-        // Note: this was looping while dataLength == 0 || lastAckWait,
-        // which was discarding the last packet if it was not full size
-        // Should send the packet.
     }
 
+    /**
+     * send file to server using the default server port
+     * @param filename
+     * @param mode
+     * @param input
+     * @param address
+     * @throws IOException
+     */
     public void sendFile(String filename, String mode, InputStream input,
                          InetAddress address)
             throws IOException
@@ -345,10 +380,10 @@ public class TFTPClient extends TFTPBase{
         sendFile(filename, mode, input, address, TFTPBase.DEFAULT_SERVER_PORT);
     }
 
-    public int getMaxTimeoutNumber() {
-        return maxTimeoutNumber;
-    }
-
+    /**
+     * set maximum trying times of timeout
+     * @param maxTimeoutNumber
+     */
     public void setMaxTimeoutNumber(int maxTimeoutNumber) {
         this.maxTimeoutNumber = maxTimeoutNumber;
     }

@@ -11,11 +11,20 @@ import java.io.OutputStream;
 public class NetasciiOutputStream  extends FilterOutputStream {
     private boolean isCrLast;
 
+    /**
+     * constructor with an OuputStream
+     * @param output
+     */
     public NetasciiOutputStream(OutputStream output){
         super(output);
         this.isCrLast = false;
     }
 
+    /**
+     * write a char
+     * @param ch
+     * @throws IOException
+     */
     public synchronized void write(int ch) throws IOException {
         if (NetasciiInputStream.IS_CONVERSION_NEEDED)
         {
@@ -26,12 +35,24 @@ public class NetasciiOutputStream  extends FilterOutputStream {
         }
     }
 
+    /**
+     * write a set of bytes
+     * @param data
+     * @throws IOException
+     */
     public synchronized void write(byte data[])
             throws IOException
     {
         write(data, 0, data.length);
     }
 
+    /**
+     * write a set of bytes by given offset and length
+     * @param data
+     * @param offset
+     * @param length
+     * @throws IOException
+     */
     public synchronized void write(byte data[], int offset, int length)
             throws IOException
     {
@@ -44,6 +65,10 @@ public class NetasciiOutputStream  extends FilterOutputStream {
         }
     }
 
+    /**
+     * close the output stream
+     * @throws IOException
+     */
     public synchronized void close()
             throws IOException
     {
@@ -57,6 +82,11 @@ public class NetasciiOutputStream  extends FilterOutputStream {
         }
     }
 
+    /**
+     * write char for netascii
+     * @param ch
+     * @throws IOException
+     */
     private void writeChar(int ch) throws IOException {
         switch (ch)
         {

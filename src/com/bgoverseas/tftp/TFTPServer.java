@@ -17,30 +17,89 @@ import java.util.Iterator;
  */
 public class TFTPServer implements Runnable{
 
+    /**
+     * default server port
+     */
     private static final int DEFAULT_TFTP_PORT = 6900;
+
+    /**
+     * server mode(R: read, W: read and write)
+     */
     public static enum ServerMode { R, W; }
+
+    /**
+     * a set of file transfer handler used for multi-threads
+     */
     private HashSet<TFTPServerHandler> handlers = new HashSet<TFTPServerHandler>();
+    /**
+     * server mode
+     */
     private ServerMode mode;
+    /**
+     * maximum trying timeout times
+     */
     private int maxTimeoutTimes = 3;
+    /**
+     * server port
+     */
     private int serverPort;
+    /**
+     * server read file directory
+     */
     private File serverReadDirectory;
+    /**
+     * server write file directory
+     */
     private File serverWriteDirectory;
+    /**
+     * whether to shutdown the server or not
+     */
     private volatile boolean shutdownServer = false;
+    /**
+     * TFTP instance
+     */
     private TFTPBase serverTftp;
+    /**
+     * server thread
+     */
     private Thread serverThread;
+    /**
+     * socket timeout time
+     */
     private int socketTimeout;
+    /**
+     * server execption
+     */
     private Exception serverException;
 
+    /**
+     * constructor
+     * @param serverReadDirectory
+     * @param serverWriteDirectory
+     * @param port
+     * @param mode
+     * @throws IOException
+     */
     public TFTPServer(File serverReadDirectory, File serverWriteDirectory, int port, ServerMode mode) throws IOException {
         this.serverPort = port;
         this.mode = mode;
         launch(serverReadDirectory, serverWriteDirectory);
     }
 
+    /**
+     * constructor using default server port
+     * @param serverReadDirectory
+     * @param serverWriteDirector
+     * @param mode
+     * @throws IOException
+     */
     public TFTPServer(File serverReadDirectory, File serverWriteDirector, ServerMode mode) throws IOException {
         this(serverReadDirectory, serverWriteDirector, TFTPServer.DEFAULT_TFTP_PORT, mode);
     }
 
+    /**
+     * the actual method for the thread
+     */
     public void run()
     {
         try
@@ -80,6 +139,13 @@ public class TFTPServer implements Runnable{
         }
 
     }
+
+    /**
+     * launch the server
+     * @param serverReadDirectory
+     * @param serverWriteDirectory
+     * @throws IOException
+     */
     private void launch(File serverReadDirectory, File serverWriteDirectory) throws IOException
     {
         System.out.println("Starting TFTP Server on port " + this.serverPort + ".  Read directory: "
@@ -115,11 +181,18 @@ public class TFTPServer implements Runnable{
         this.serverThread.start();
     }
 
+    /**
+     * finalization method
+     * @throws Throwable
+     */
     protected void finalize() throws Throwable
     {
         shutdown();
     }
 
+    /**
+     * shutdown the server
+     */
     public void shutdown()
     {
         shutdownServer = true;
@@ -149,25 +222,47 @@ public class TFTPServer implements Runnable{
         }
     }
 
-    public int getSocketTimeout() {
-        return socketTimeout;
-    }
-
+    /**
+     * set socket timeout
+     * @param socketTimeout
+     */
     public void setSocketTimeout(int socketTimeout) {
         this.socketTimeout = socketTimeout;
     }
 
+    /**
+     * private class of file transfer handler
+     */
     private class TFTPServerHandler implements Runnable{
+        /**
+         * tftp packet which will be sent
+         */
         private TFTPBasePacket tftpPacket;
+        /**
+         * shutdown status
+         */
         private boolean shutdownHandler = false;
+        /**
+         * tftp processor
+         */
         TFTPBase tftp = null;
+        /**
+         * socket timeout
+         */
         protected int socketTimeout;
 
+        /**
+         * constructor
+         * @param tftpPacket
+         */
         public TFTPServerHandler(TFTPBasePacket tftpPacket){
             this.tftpPacket = tftpPacket;
             this.socketTimeout = TFTPBase.DEFAULT_TIMEOUT;
         }
 
+        /**
+         * show down the handler
+         */
         public void shutdown(){
             shutdownHandler = true;
             try
@@ -176,10 +271,12 @@ public class TFTPServer implements Runnable{
             }
             catch (RuntimeException e)
             {
-                // noop
             }
         }
 
+        /**
+         * the actual method of the handler thread
+         */
         public void run()
         {
             try
@@ -230,6 +327,12 @@ public class TFTPServer implements Runnable{
             }
         }
 
+        /**
+         * process the read request
+         * @param rrqPacket
+         * @throws IOException
+         * @throws TFTPPacketException
+         */
         private void handleRead(TFTPReadRequestPacket rrqPacket) throws IOException, TFTPPacketException
         {
             InputStream is = null;
@@ -372,6 +475,12 @@ public class TFTPServer implements Runnable{
             }
         }
 
+        /**
+         * process the write request
+         * @param wrqPacket
+         * @throws IOException
+         * @throws TFTPPacketException
+         */
         private void handleWrite(TFTPWriteRequestPacket wrqPacket) throws IOException,
                 TFTPPacketException
         {
@@ -532,6 +641,14 @@ public class TFTPServer implements Runnable{
             }
         }
 
+        /**
+         * build a file
+         * @param serverDirectory
+         * @param fileName
+         * @param createSubDirs
+         * @return
+         * @throws IOException
+         */
         private File buildSafeFile(File serverDirectory, String fileName, boolean createSubDirs)
                 throws IOException
         {
@@ -552,6 +669,11 @@ public class TFTPServer implements Runnable{
             return temp;
         }
 
+        /**
+         * create the directory
+         * @param file
+         * @throws IOException
+         */
         private void createDirectory(File file) throws IOException
         {
             File parent = file.getParentFile();
@@ -584,6 +706,12 @@ public class TFTPServer implements Runnable{
             }
         }
 
+        /**
+         * check the sub directory
+         * @param parent
+         * @param child
+         * @return
+         */
         private boolean isSubdirectoryOf(File parent, File child)
         {
             File childsParent = child.getParentFile();
