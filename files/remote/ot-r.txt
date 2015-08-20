@@ -1,8 +1,28 @@
-ot-r
+NGINX is an open source web server and reverse proxy that excels at large-scale web integration, application security, and web acceleration. NGINX Plus extends NGINX with additional load balancing and application delivery features. The articles in the NGINX Plus Admin Guide will quickly show you how to use some of the most popular features of NGINX and NGINX Plus. To purchase an NGINX Plus subscription, contact the NGINX Plus sales team.
 
+Web server 每 Configuring virtual servers and locations, using variables, rewriting URIs, and customizing error pages
+Reverse proxy 每 Proxying requests to HTTP, FastCGI, uwsgi, SCGI, and memcached servers; controlling proxied request headers; and buffering of responses from proxied servers
+Web content cache 每 Caching static and dynamic content from proxied servers
+HTTP load balancer 每 Distributing HTTP requests across a group of servers based on a choice of algorithms, with passive and proactive checking of upstream server health and runtime modification of the load-balancing configuration
+TCP load balancer 每 Distributing TCP connections across a group of servers based on a choice of algorithms, with passive and proactive checking of upstream server health and runtime modification of the load-balancing configuration
+SSL termination 每 Delivering web content over HTTPS
+SSL termination for TCP upstreams 每 Delivering TCP traffic over HTTPS
+SSL Between NGINX Plus and a TCP upstream 每 Securing TCP traffic between NGINX Plus and upstream servers
+Compression and decompression 每 Compressing responses on the fly to minimize use of network bandwidth
+Serving static content 每 Setting the root directory for requested content, and creating ordered lists of files to serve if the original index file or URI does not exist
+Restricting access 每 Controlling access based on client IP address, configuring HTTP basic authentication, limiting the number of simultaneous connections, and limiting request rate and bandwidth per connection
+Runtime control 每 Starting and stopping NGINX and NGINX Plus processes, including zero-downtime reconfiguration and binary upgrades
+Logging and monitoring 每 Logging errors and requests, and monitoring NGINX Plus status and performance metrics in real time on the Live Activity Monitoring dashboard
+High availability for NGINX Plus 每 Configuring high availability of NGINX Plus instances with a solution based on keepalived
+NGINX and NGINX Plus also support SPDY, proxying of WebSocket traffic, streaming media delivery, content transformation through SSI or XSLT, and mail proxy server functionality. All of these features 每 and more 每 are covered in detail in the reference documentation.
 
+Deployment Guides
 
-ot-r
+NGINX Plus on AWS EC2 每 Setting up NGINX Plus AMIs to load balance and deliver applications and content in the Amazon Web Services Elastic Compute Cloud (AWS EC2)
+NGINX Plus on Microsoft Azure 每 Setting up NGINX Plus VMs to load balance and deliver applications and content in Microsoft Azure
+New Relic Plug-In 每 Enabling monitoring of NGINX in the New Relic Application Performance Monitoring (APM) tool
+Load Balance Microsoft Exchange Servers 每 Using NGINX Plus to load balance both TCP-based and HTTP-based Microsoft Exchange traffic
+NGINX with uWSGI and Django 每 Using NGINX as an application gateway with uWSGI and Django
+NGINX Plus Releases
 
-
-@$%$
+Feature Lists for NGINX Plus Releases
