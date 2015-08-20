@@ -7,6 +7,12 @@ Please install the plugin for md file or visit the web page on bitbucket: https:
 * JDK 8(The codes was developed and tested on the version, while it might work on a lower version but not guaranteed)
 * The port of `6900` must be vacant, because the TFTP test server will use it
 
+### Supported file size ###
+
+* In theory, there is no file size limit, cause after sending 65535 blocks my code resets the block number to 0 and keeps sending the data blocks
+* In reality, the file size limit depends on the jvm memory limit, the computer memory and the disk space. The largest file I tested was 185MB.
+* For the original tftp, if the code doesn't reset the block number, it can only support the largest file of 32MB
+
 ### Terms for README ###
 
 * {BaseDir} stands for the base directory of the project which the the folder where ant build.xml and README.md reside

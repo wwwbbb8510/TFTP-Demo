@@ -15,10 +15,8 @@ public class TFTPServerTest {
      * @param args
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception
-    {
-        if (args.length != 1)
-        {
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
             System.out
                     .println("One parameter is required which is the directory for the test server");
             System.exit(1);

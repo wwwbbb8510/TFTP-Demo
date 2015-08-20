@@ -137,6 +137,32 @@
         </java>
     </target>
 
+    <target name="run-client-send-big-na" depends="jar-client">
+        <java jar="build/jar/TFTPClient.jar" fork="true">
+            <arg value="-a"></arg>
+            <arg value="-s"></arg>
+            <!--hostname-->
+            <arg value="localhost"></arg>
+            <!--local file name-->
+            <arg value="files/ideaIC-14.1.4.dmg"></arg>
+            <!--server file name-->
+            <arg value="ideaIC-14.1.4.dmg.w"></arg>
+        </java>
+    </target>
+
+    <target name="run-client-receive-big-na" depends="jar-client">
+        <java jar="build/jar/TFTPClient.jar" fork="true">
+            <arg value="-a"></arg>
+            <arg value="-s"></arg>
+            <!--hostname-->
+            <arg value="localhost"></arg>
+            <!--local file name-->
+            <arg value="files/ideaIC-14.1.4.dmg.r"></arg>
+            <!--server file name-->
+            <arg value="ideaIC-14.1.4.dmg"></arg>
+        </java>
+    </target>
+
     <target name="run-checksum" depends="compile">
         <echo message="Enter the file name and press enter, then you will get the checksum value."/>
         <echo message="Enter the string 'exit' to quit"/>
@@ -156,6 +182,8 @@
         <delete file="files/remote/ot-w.txt"/>
         <delete file="files/remote/image-na-w.jpg"/>
         <delete file="files/remote/image-ot-w.jpg"/>
+        <delete file="files/ideaIC-14.1.4.dmg.r"/>
+        <delete file="files/ideaIC-14.1.4.dmg.w"/>
     </target>
 
 </project>

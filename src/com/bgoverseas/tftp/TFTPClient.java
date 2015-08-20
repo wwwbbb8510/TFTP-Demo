@@ -75,51 +75,40 @@ public class TFTPClient extends TFTPBase{
 
             //receive the packet
             _receivePacket:
-            while (true)
-            {
+            while (true) {
                 timeoutTimes = 0;
-                while (timeoutTimes < this.maxTimeoutNumber)
-                {
-                    try
-                    {
+                while (timeoutTimes < this.maxTimeoutNumber) {
+                    try {
                         receivedPacket = this.receive();
                         break;
                     }
-                    catch (SocketException e)
-                    {
-                        if (++timeoutTimes >= this.maxTimeoutNumber)
-                        {
+                    catch (SocketException e) {
+                        if (++timeoutTimes >= this.maxTimeoutNumber) {
                             throw new IOException("Connection timed out.");
                         }
                         continue;
                     }
-                    catch (InterruptedIOException e)
-                    {
-                        if (++timeoutTimes >= this.maxTimeoutNumber)
-                        {
+                    catch (InterruptedIOException e) {
+                        if (++timeoutTimes >= this.maxTimeoutNumber) {
                             throw new IOException("Connection timed out.");
                         }
                         continue;
                     }
-                    catch (TFTPPacketException e)
-                    {
+                    catch (TFTPPacketException e) {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
                 }
 
                 //get the host tid/port from the first received packet
-                if (lastBlock == 0)
-                {
+                if (lastBlock == 0) {
                     hostTid = receivedPacket.getTid();
                     ack.setTid(hostTid);
                 }
 
                 if (address.equals(receivedPacket.getAddress()) &&
-                        receivedPacket.getTid() == hostTid)
-                {//TID and host address match the connection
+                        receivedPacket.getTid() == hostTid) {//TID and host address match the connection
 
-                    switch (receivedPacket.getOpcode())
-                    {
+                    switch (receivedPacket.getOpcode()) {
                         case TFTPBasePacket.OPCODE_ERROR_REQUEST:
                             error = (TFTPErrorPacket)receivedPacket;
                             throw new IOException("Error code " + error.getErrorCode() +
@@ -130,15 +119,12 @@ public class TFTPClient extends TFTPBase{
 
                             lastBlock = data.getBlockNumber();
 
-                            if (lastBlock == block)
-                            {
-                                try
-                                {
+                            if (lastBlock == block) {
+                                try {
                                     output.write(data.getData(), data.getOffset(),
                                             dataLength);
                                 }
-                                catch (IOException e)
-                                {
+                                catch (IOException e) {
                                     error = new TFTPErrorPacket(hostTid, address,
                                             TFTPErrorPacket.ERROR_DISK_FULL,
                                             "File write failed.");
@@ -146,15 +132,13 @@ public class TFTPClient extends TFTPBase{
                                     throw e;
                                 }
                                 ++block;
-                                if (block > 65535)
-                                {
+                                if (block > 65535) {
                                     block = 0;
                                 }
 
                                 break _receivePacket;
                             }
-                            else
-                            {
+                            else {
                                 this.discard();
 
                                 if (lastBlock == (block == 0 ? 65535 : (block - 1)))
@@ -167,9 +151,7 @@ public class TFTPClient extends TFTPBase{
                         default:
                             throw new IOException("Received unexpected Opcode.");
                     }
-                }
-                else
-                {//TID doesn't match that from the connected server
+                } else {//TID doesn't match that from the connected server
                     error = new TFTPErrorPacket(receivedPacket.getTid(), receivedPacket.getAddress(), TFTPErrorPacket.ERROR_UNKNOWN_TRANSFER_ID, "Unexpected TID from the host.");
                     this.send(error);
                     continue _sendPacket;
@@ -216,12 +198,12 @@ public class TFTPClient extends TFTPBase{
      * @throws IOException
      */
     public void sendFile(String filename, String mode, InputStream input,
-                         InetAddress address, int port) throws IOException
-    {
+                         InetAddress address, int port) throws IOException {
         //initiate the variables
         int bytesRead = 0;
         int timeoutTimes = 0;
         int lastBlock = 0;
+        int totalBlockLoops = 1;
         int block = 0;
         int hostTid = 0;
         int dataLength = 0;
@@ -242,58 +224,46 @@ public class TFTPClient extends TFTPBase{
         sentPacket = new TFTPWriteRequestPacket(port, address, filename, mode);
 
         _sendPacket:
-        do
-        {
+        do {
             //send the packet
             this.send(sentPacket);
 
             // receive the packet
             _receivePacket:
-            while (true)
-            {
+            while (true) {
                 timeoutTimes = 0;
-                while (timeoutTimes < this.maxTimeoutNumber)
-                {
-                    try
-                    {
+                while (timeoutTimes < this.maxTimeoutNumber) {
+                    try {
                         receivedPacket = this.receive();
                         break;
                     }
-                    catch (SocketException e)
-                    {
-                        if (++timeoutTimes >= this.maxTimeoutNumber)
-                        {
+                    catch (SocketException e) {
+                        if (++timeoutTimes >= this.maxTimeoutNumber) {
                             throw new IOException("Connection timed out.");
                         }
                         continue;
                     }
-                    catch (InterruptedIOException e)
-                    {
-                        if (++timeoutTimes >= this.maxTimeoutNumber)
-                        {
+                    catch (InterruptedIOException e) {
+                        if (++timeoutTimes >= this.maxTimeoutNumber) {
                             throw new IOException("Connection timed out.");
                         }
                         continue;
                     }
-                    catch (TFTPPacketException e)
-                    {
+                    catch (TFTPPacketException e) {
                         throw new IOException("Bad packet: " + e.getMessage());
                     }
                 }
 
                 // The first time we receive we get the port number and
-                if (justStarted)
-                {
+                if (justStarted) {
                     justStarted = false;
                     hostTid = receivedPacket.getTid();
                     data.setTid(hostTid);
                 }
                 // should be sent to originator if unexpected TID or host.
                 if (address.equals(receivedPacket.getAddress()) &&
-                        receivedPacket.getTid() == hostTid)
-                {
-                    switch (receivedPacket.getOpcode())
-                    {
+                        receivedPacket.getTid() == hostTid) {
+                    switch (receivedPacket.getOpcode()) {
                         case TFTPBasePacket.OPCODE_ERROR_REQUEST:
                             error = (TFTPErrorPacket)receivedPacket;
                             throw new IOException("Error code " + error.getErrorCode() +
@@ -303,12 +273,12 @@ public class TFTPClient extends TFTPBase{
 
                             lastBlock = ack.getBlockNumber();
 
-                            if (lastBlock == block)
-                            {
+                            if (lastBlock == block) {
                                 ++block;
-                                if (block > 65535)
-                                {
+                                if (block > 65535) {
                                     block = 0;
+                                    System.out.println("The " + totalBlockLoops + " number of 65535 blocks have been sent");
+                                    totalBlockLoops ++;
                                 }
                                 if (lastAckWait) {
 
@@ -332,9 +302,7 @@ public class TFTPClient extends TFTPBase{
                         default:
                             throw new IOException("Received unexpected packet type.");
                     }
-                }
-                else
-                {
+                } else {
                     error = new TFTPErrorPacket(receivedPacket.getTid(),receivedPacket.getAddress(),TFTPErrorPacket.ERROR_UNKNOWN_TRANSFER_ID,
                             "Unexpected TID from the server.");
                     this.send(error);
@@ -347,8 +315,7 @@ public class TFTPClient extends TFTPBase{
             totalThisPacket = 0;
             byte[] blockContent = new byte[TFTPBase.ACCEPTED_DEFAULT_PACKET_SIZE];
             while (dataLength > 0 &&
-                    (bytesRead = input.read(blockContent, offset, dataLength)) > 0)
-            {
+                    (bytesRead = input.read(blockContent, offset, dataLength)) > 0) {
                 offset += bytesRead;
                 dataLength -= bytesRead;
                 totalThisPacket += bytesRead;
@@ -375,8 +342,7 @@ public class TFTPClient extends TFTPBase{
      */
     public void sendFile(String filename, String mode, InputStream input,
                          InetAddress address)
-            throws IOException
-    {
+            throws IOException {
         sendFile(filename, mode, input, address, TFTPBase.DEFAULT_SERVER_PORT);
     }
 
