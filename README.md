@@ -177,41 +177,42 @@ Please download and install the newest version of IntelliJ
 
 ### Checksum tool ###
 
-* After having done file transfers, there will be four files in the files/local and in the files/remote folder respectively.
-The following steps are used for comaparing the checksum value of the files. There are also two ways to do it: ant or IntelliJ
+* After having done file transfers, there will be eight files in the files/local and in the files/remote folder respectively.
+The following steps are used for comaparing the checksum(java CRC32) value of the files. There are also two ways to do it: ant or IntelliJ
 
 1. Ant: Simply run the command: `ant run-checksum`
 > Enter the file names below to get all of the checksum values:
-> > `files/local/na-w.txt` checksum()
+> > `files/local/na-w.txt` checksum(3599513513)
 > >
-> > `files/local/na-r.txt` checksum()
+> > `files/local/na-r.txt` checksum(171489872)
 > >
-> > `files/local/image-na-w.jpg` checksum()
+> > `files/local/image-na-w.jpg` checksum(2560170849)
 > >
-> > `files/local/image-na-r.jpg` checksum()
+> > `files/local/image-na-r.jpg` checksum(1831675345)
 > >
-> > `files/local/ot-w.txt` checksum()
+> > `files/local/ot-w.txt` checksum(2103826032)
 > >
-> > `files/local/ot-r.txt` checksum()
+> > `files/local/ot-r.txt` checksum(3061488982)
 > >
-> > `files/local/image-ot-w.jpg`checksum()
+> > `files/local/image-ot-w.jpg`checksum(3639916153)
 > >
-> > `files/local/image-ot-r.jpg` checksum()
+> > `files/local/image-ot-r.jpg` checksum(3439881240)
 > >
-> > `files/remote/na-w.txt` checksum()
+> > `files/remote/na-w.txt` checksum(3599513513)
 > >
-> > `files/remote/na-r.txt` checksum()
+> > `files/remote/na-r.txt` checksum(171489872)
 > >
-> > `files/remote/image-na-w.jpg` checksum()
+> > `files/remote/image-na-w.jpg` checksum(2560170849)
 > >
-> > `files/remote/image-na-r.jpg` checksum()
+> > `files/remote/image-na-r.jpg` checksum(1831675345)
 > >
-> > `files/remote/ot-w.txt` checksum()
+> > `files/remote/ot-w.txt` checksum(2103826032)
 > >
-> > `files/remote/ot-r.txt` checksum()
+> > `files/remote/ot-r.txt` checksum(3061488982)
 > >
-> > `files/remote/image-ot-w.jpg` checksum()
+> > `files/remote/image-ot-w.jpg` checksum(3639916153)
 > >
-> > `files/remote/image-ot-r.jpg` checksum()
+> > `files/remote/image-ot-r.jpg` checksum(3439881240)
 > >
+> > Note: It seems java scanner doesn't work perfectly with window command line tool. The issue is that when you input some letters you couldn't see them, but the program will be able to get what you input. So don't worry about not being able to see what you input immediately and the easiest way is to copy and paste.
 2. IntelliJ: Open and run the file src/com/bgoverseas/Checksum and enter the file names as Ant.
