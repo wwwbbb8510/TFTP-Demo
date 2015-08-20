@@ -1,5 +1,6 @@
 # README #
 This project implements the TFTP protocol
+Please install the plugin for md file or visit the web page on bitbucket: https://bitbucket.org/wwwbbb8510/tftp_demo
 
 ### Basic Requirements ###
 
@@ -39,6 +40,22 @@ This project implements the TFTP protocol
 >       Since the server directory is {BaseDir}/files/remote, the whole path of the sent file on the server is {BaseDir}/files/remote/ot-w.txt
 >       All of the paths are defined in build.xml as well.
 
+* Test sending the image from client to server using the mode of Netascii
+
+> `ant run-client-send-image-na`
+> 
+> Note: The client path is {BaseDir}/files/local/image-na-w.jpg and the server file name is image-na-w.jpg.
+>      Since the server directory is {BaseDir}/files/remote, the whole path of the sent file on the server is {BaseDir}/files/remote/image-na-w.jpg
+>      All of the paths are defined in build.xml as well.
+
+* Test sending the image from client to server using the mode of Octet
+
+> `ant run-client-send-image-ot`
+> 
+> Note: The client path is {BaseDir}/files/local/image-ot-w.jpg and the server file name is image-ot-w.jpg.
+>       Since the server directory is {BaseDir}/files/remote, the whole path of the sent file on the server is {BaseDir}/files/remote/image-ot-w.jpg
+>       All of the paths are defined in build.xml as well.
+
 * Test copying the file from server to client using the mode of Netascii
 
 > `ant run-client-receive-na`
@@ -53,6 +70,22 @@ This project implements the TFTP protocol
 > 
 > Note: The server file is ot-r.txt. As the server directory is {BaseDir}/files/remote, the whole path of the file is {BaseDir}/files/remote/ot-r.txt
 >       The client path is {BaseDir}/files/local/ot-r.txt.
+>       All of the paths are defined in build.xml as well.
+
+* Test copying the image from server to client using the mode of Netascii
+
+> `ant run-client-receive-image-na`
+> 
+> Note: The server file is image-na-r.jpg. As the server directory is {BaseDir}/files/remote, the whole path of the file is {BaseDir}/files/remote/image-na-r.jpg
+>       The client path is {BaseDir}/files/local/image-na-r.jpg.
+>       All of the paths are defined in build.xml as well.
+
+* Test copying the image from server to client using the mode of Octet
+
+> `ant run-client-receive-image-ot`
+> 
+> Note: The server file is image-ot-r.jpg. As the server directory is {BaseDir}/files/remote, the whole path of the file is {BaseDir}/files/remote/image-ot-r.jpg
+>       The client path is {BaseDir}/files/local/image-ot-r.jpg.
 >       All of the paths are defined in build.xml as well.
 
 * Want to try the tests again? Please run the following command to delete the copied files
@@ -100,6 +133,20 @@ Please download and install the newest version of IntelliJ
 > 3. Enter "-s -b localhost files/local/ot-w.txt ot-w.txt" as the Program Arguments value
 > 4. Run the client
 
+* Test sending the image from client to server using the mode of Netascii
+
+> 1. Open src/com/bgoverseas/TFTPClientText
+> 2. Open Run->Edit Configuration
+> 3. Enter "-s -a localhost files/local/image-na-w.jpg image-na-w.jpg" as the Program Arguments value
+> 4. Run the client
+
+* Test sending the image from client to server using the mode of Octet
+
+> 1. Open src/com/bgoverseas/TFTPClientText
+> 2. Open Run->Edit Configuration
+> 3. Enter "-s -b localhost files/local/image-ot-w.jpg image-ot-w.jpg" as the Program Arguments value
+> 4. Run the client
+
 * Test copying the file from server to client using the mode of Netascii
 
 > 1. Open src/com/bgoverseas/TFTPClientText
@@ -114,6 +161,20 @@ Please download and install the newest version of IntelliJ
 > 3. Enter "-r -b localhost files/local/ot-r.txt ot-r.txt" as the Program Arguments value
 > 4. Run the client
 
+* Test copying the image from server to client using the mode of Netascii
+
+> 1. Open src/com/bgoverseas/TFTPClientText
+> 2. Open Run->Edit Configuration
+> 3. Enter "-r -a localhost files/local/image-na-r.jpg image-na-r.jpg" as the Program Arguments value
+> 4. Run the client
+
+* Test copying the image from server to client using the mode of Octet
+
+> 1. Open src/com/bgoverseas/TFTPClientText
+> 2. Open Run->Edit Configuration
+> 3. Enter "-r -b localhost files/local/image-ot-r.jpg image-ot-r.jpg" as the Program Arguments value
+> 4. Run the client
+
 ### Checksum tool ###
 
 * After having done file transfers, there will be four files in the files/local and in the files/remote folder respectively.
@@ -121,20 +182,36 @@ The following steps are used for comaparing the checksum value of the files. The
 
 1. Ant: Simply run the command: `ant run-checksum`
 > Enter the file names below to get all of the checksum values:
-> > `files/local/na-w.txt`
+> > `files/local/na-w.txt` checksum()
 > >
-> > `files/local/na-r.txt`
+> > `files/local/na-r.txt` checksum()
 > >
-> > `files/local/ot-w.txt`
+> > `files/local/image-na-w.jpg` checksum()
 > >
-> > `files/local/ot-r.txt`
+> > `files/local/image-na-r.jpg` checksum()
 > >
-> > `files/remote/na-w.txt`
+> > `files/local/ot-w.txt` checksum()
 > >
-> > `files/remote/na-r.txt`
+> > `files/local/ot-r.txt` checksum()
 > >
-> > `files/remote/ot-w.txt`
+> > `files/local/image-ot-w.jpg`checksum()
 > >
-> > `files/remote/ot-r.txt`
+> > `files/local/image-ot-r.jpg` checksum()
+> >
+> > `files/remote/na-w.txt` checksum()
+> >
+> > `files/remote/na-r.txt` checksum()
+> >
+> > `files/remote/image-na-w.jpg` checksum()
+> >
+> > `files/remote/image-na-r.jpg` checksum()
+> >
+> > `files/remote/ot-w.txt` checksum()
+> >
+> > `files/remote/ot-r.txt` checksum()
+> >
+> > `files/remote/image-ot-w.jpg` checksum()
+> >
+> > `files/remote/image-ot-r.jpg` checksum()
 > >
 2. IntelliJ: Open and run the file src/com/bgoverseas/Checksum and enter the file names as Ant.
